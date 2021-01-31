@@ -186,6 +186,7 @@ while option != 4:
         sI.start()
         sO.start()
         time.sleep(timeSR)
+        print("-- Stopping threads --")
         stopThreadsSR = True
         pI.join()
         pO.join()
@@ -205,12 +206,13 @@ while option != 4:
         barb.start()
         cons.start()
         time.sleep(times)
+        print("-- Stopping threads --")
         stopThreadsSP = True
         barb.join()
         cons.join()
-    if option != 4:
+    if option > 4 or option < 1:
         print("No option with that number, please try again")
-    else: 
+    else:
         print("")
         print("Thanks for running code option: ", option)
     print("")

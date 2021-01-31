@@ -1,6 +1,27 @@
+from threading import Thread, Lock
+import threading
+import time
+import random
+
+####### INTERFACE DECLARATIONS
 op1Name = "Producer - Consumer"
 op2Name = "Student rooms"
 op3Name = "Sleeping Barber"
+
+####### CONSUMER-PRODUCER DECLARATIONS
+buffer = 0
+bufferLock = Lock()
+
+####### STUDENT ROOM DECLARATIONS
+studentsIn = 0
+prefectLock = Lock()
+studentsLock = Lock()
+doorLock = Lock()
+
+####### SLEEPING BARBER DECLARATIONS
+barberLock = Lock()
+costumerLock = Lock()
+modificationLock = Lock()
 
 def chooseOption():
     print("Enter number of option of code to run:")

@@ -104,7 +104,42 @@ def StudentIn():
             break
 
 # Sleeping Barber
+def Barber():
+    global freeSeats
+    while True:
+        if costumerLock.locked():
+            if not modificationLock.locked():
+                modificationLock.acquire()
+                barberLock.acquire()
+                freeSeats += 1
+                print("Barber: Cutting hair // Free seats: ", freeSeats)
+                if freeSeats == seats:
+                    costumerLock.release()
+                barberLock.release()
+                modificationLock.release()
+        else:
+            print("Barber: No costumers waiting")
+        time.sleep(random.random())
+        if stopThreadsSP:
+            break
 
+
+def Customer():
+    global freeSeats
+    while True:
+        if not modificationLock.locked():
+            modificationLock.acquire()
+            if freeSeats > 0:
+                freeSeats -= 1
+                print("Costumer: Sit, hello // Free seats", freeSeats)
+                if not costumerLock.locked():
+                    costumerLock.acquire()
+            else:
+                print("Costumer: No seats available, bye")
+            modificationLock.release()
+            time.sleep(random.random())
+            if stopThreadsSP:
+                break
 
 ######### INTERFACE (MAIN) #########
 def chooseOption():
@@ -158,10 +193,26 @@ while option != 4:
         sO.join()
     elif option == 3:
         print("Running: ", op3Name)
-    elif option != 4:
+        print("")
+        seats = int(input("Type number of seats in the barbershop: "))
+        print("")
+        freeSeats = seats
+        stopThreadsSP = False
+        barb = threading.Thread(target=Barber)
+        cons = threading.Thread(target=Customer)
+        times = int(input("Time for the program to run: "))
+        print("")
+        barb.start()
+        cons.start()
+        time.sleep(times)
+        stopThreadsSP = True
+        barb.join()
+        cons.join()
+    if option != 4:
         print("No option with that number, please try again")
-    print("")
-    print("Thanks for running code option: ", option)
+    else: 
+        print("")
+        print("Thanks for running code option: ", option)
     print("")
     option = chooseOption()
 

@@ -4,7 +4,6 @@ import time
 import random
 
 ############# DECLARATIONS #############
-
 # Interface
 op1Name = "Producer - Consumer"
 op2Name = "Student rooms"
@@ -26,7 +25,6 @@ costumerLock = Lock()
 modificationLock = Lock()
 
 ############### THREADS ###############
-
 # Consumer - Producer
 def ProducerThread():
     global buffer
@@ -58,17 +56,7 @@ def ConsumerThread():
 # Sleeping Barber
 
 
-######### Execution Functions #########
-
-# Consumer - Producer
-
-
-# Student Room
-
-
-# Sleeping Barber
-
-
+######### INTERFACE (MAIN) #########
 def chooseOption():
     print("Enter number of option of code to run:")
     print("1: " + op1Name)

@@ -28,7 +28,29 @@ modificationLock = Lock()
 ############### THREADS ###############
 
 # Consumer - Producer
+def ProducerThread():
+    global buffer
+    while True:
+        if buffer < 2:
+            bufferLock.acquire()
+            buffer += 1
+            print("Produced data:", buffer)
+            bufferLock.release()
+            time.sleep(random.random())
+        if stopThreadsCP:
+            break
 
+def ConsumerThread():
+    global buffer
+    while True:
+        if buffer == 2:
+            bufferLock.acquire()
+            buffer = 0
+            print("Consumed data. Remaining: ", buffer)
+            bufferLock.release()
+            time.sleep(random.random())
+        if stopThreadsCP:
+            break
 
 # Student Room
 
@@ -61,6 +83,20 @@ option = chooseOption()
 while option != 4:
     if option == 1:
         print("Running: ", op1Name)
+        print("")
+        stopThreadsCP = False
+        producer = threading.Thread(target=ProducerThread)
+        consumer = threading.Thread(target=ConsumerThread)
+        timeCP = int(input("Time for the program to run: "))
+        print("")
+        print("--- Buffer size: 2")
+        producer.start()
+        consumer.start()
+        time.sleep(timeCP)
+        print("-- Stopping threads --")
+        stopThreadsCP = True
+        producer.join()
+        consumer.join()
     elif option == 2:
         print("Running: ", op2Name)
     elif option == 3:

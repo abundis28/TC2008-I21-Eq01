@@ -4,28 +4,28 @@ import time
 import random
 
 ############# DECLARATIONS #############
-# Interface
+##### Interface
 op1Name = "Producer - Consumer"
 op2Name = "Student rooms"
 op3Name = "Sleeping Barber"
 
-# Consumer - Producer
+##### Consumer - Producer
 buffer = 0
 bufferLock = Lock()
 
-# Student Room
+##### Student Room
 studentsIn = 0
 prefectLock = Lock()
 studentsLock = Lock()
 doorLock = Lock()
 
-# Sleeping Barber
+##### Sleeping Barber
 barberLock = Lock()
 costumerLock = Lock()
 modificationLock = Lock()
 
 ############### THREADS ###############
-# Consumer - Producer
+##### Consumer - Producer
 def ProducerThread():
     global buffer
     while True:
@@ -50,7 +50,7 @@ def ConsumerThread():
         if stopThreadsCP:
             break
 
-# Student Room
+##### Student Room
 def PrefectIn():
     global studentsIn
     while True:
@@ -103,7 +103,7 @@ def StudentIn():
         if stopThreadsSR:
             break
 
-# Sleeping Barber
+##### Sleeping Barber
 def Barber():
     global freeSeats
     while True:
@@ -160,13 +160,13 @@ while option != 4:
         stopThreadsCP = False
         producer = threading.Thread(target=ProducerThread)
         consumer = threading.Thread(target=ConsumerThread)
-        timeCP = int(input("Time for the program to run: "))
+        timeCP = int(input("Type the number of seconds the option will run: "))
         print("")
         print("--- Buffer size: 2")
         producer.start()
         consumer.start()
         time.sleep(timeCP)
-        print("-- Stopping threads --")
+        print("-- Time limit reached: stopping threads --")
         stopThreadsCP = True
         producer.join()
         consumer.join()
@@ -178,7 +178,7 @@ while option != 4:
         pO = threading.Thread(target=PrefectOut)
         sI = threading.Thread(target=StudentIn)
         sO = threading.Thread(target=StudentOut)
-        timeSR = int(input("Time for the program to run: "))
+        timeSR = int(input("Type the number of seconds the option will run: "))
         print("")
         print("--- Room capacity: 50 students")
         pI.start()
@@ -186,7 +186,7 @@ while option != 4:
         sI.start()
         sO.start()
         time.sleep(timeSR)
-        print("-- Stopping threads --")
+        print("-- Time limit reached: stopping threads --")
         stopThreadsSR = True
         pI.join()
         pO.join()
@@ -195,18 +195,18 @@ while option != 4:
     elif option == 3:
         print("Running: ", op3Name)
         print("")
-        seats = int(input("Type number of seats in the barbershop: "))
-        print("")
-        freeSeats = seats
         stopThreadsSP = False
         barb = threading.Thread(target=Barber)
         cons = threading.Thread(target=Customer)
-        times = int(input("Time for the program to run: "))
+        timeSP = int(input("Type the number of seconds the option will run: "))
         print("")
+        seats = int(input("Type number of seats in the barbershop: "))
+        print("")
+        freeSeats = seats
         barb.start()
         cons.start()
-        time.sleep(times)
-        print("-- Stopping threads --")
+        time.sleep(timeSP)
+        print("-- Time limit reached: stopping threads --")
         stopThreadsSP = True
         barb.join()
         cons.join()

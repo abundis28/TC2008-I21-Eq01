@@ -5,30 +5,38 @@ import random
 
 ############# DECLARATIONS #############
 
-# INTERFACE
+# Interface
 op1Name = "Producer - Consumer"
 op2Name = "Student rooms"
 op3Name = "Sleeping Barber"
 
-# CONSUMER-PRODUCER
+# Consumer - Producer
 buffer = 0
 bufferLock = Lock()
 
-# STUDENT ROOM
+# Student Room
 studentsIn = 0
 prefectLock = Lock()
 studentsLock = Lock()
 doorLock = Lock()
 
-# SLEEPING BARBER
+# Sleeping Barber
 barberLock = Lock()
 costumerLock = Lock()
 modificationLock = Lock()
 
 ############### THREADS ###############
 
+# Consumer - Producer
 
-############### THREADS ###############
+
+# Student Room
+
+
+# Sleeping Barber
+
+
+######### Execution Functions #########
 
 def chooseOption():
     print("Enter number of option of code to run:")

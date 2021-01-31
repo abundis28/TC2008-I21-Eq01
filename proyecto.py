@@ -1,7 +1,6 @@
-op1Name = "Example #7"
-op2Name = "Example #10"
-#TODO(abundis): cambiar a nombre de problema extra
-op3Name = "New Example"
+op1Name = "Producer - Consumer"
+op2Name = "Student rooms"
+op3Name = "Sleeping Barber"
 
 def chooseOption():
     print("Enter number of option of code to run:")

@@ -10,11 +10,9 @@ op2Name = "Student rooms"
 op3Name = "Sleeping Barber"
 
 ##### Consumer - Producer
-buffer = 0
 bufferLock = Lock()
 
 ##### Student Room
-studentsIn = 0
 prefectLock = Lock()
 studentsLock = Lock()
 doorLock = Lock()
@@ -157,6 +155,7 @@ while option != 4:
     if option == 1:
         print("Running: ", op1Name)
         print("")
+        buffer = 0
         stopThreadsCP = False
         producer = threading.Thread(target=ProducerThread)
         consumer = threading.Thread(target=ConsumerThread)
@@ -181,6 +180,8 @@ while option != 4:
         timeSR = int(input("Type the number of seconds the option will run: "))
         print("")
         print("--- Room capacity: 50 students")
+        studentsIn = int(input("Number of students already inside of room: "))
+        print("")
         pI.start()
         pO.start()
         sI.start()

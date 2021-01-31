@@ -160,6 +160,7 @@ while option != 4:
         print("Running: ", op3Name)
     elif option != 4:
         print("No option with that number, please try again")
+    print("")
     print("Thanks for running code option: ", option)
     print("")
     option = chooseOption()

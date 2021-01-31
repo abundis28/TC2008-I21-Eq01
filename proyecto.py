@@ -51,7 +51,57 @@ def ConsumerThread():
             break
 
 # Student Room
+def PrefectIn():
+    global studentsIn
+    while True:
+        if (studentsIn > 50 or studentsIn == 0) and not prefectLock.locked() and not doorLock.locked():
+            doorLock.acquire()
+            print("Prefect in Room")
+            prefectLock.acquire()
+            doorLock.release()
+            time.sleep(random.random())
+        if stopThreadsSR:
+            break
 
+def PrefectOut():
+    global studentsIn
+    while True:
+        if studentsIn == 0 and prefectLock.locked() and not doorLock.locked():
+            doorLock.acquire()
+            print("Prefect left Room")
+            prefectLock.release()
+            doorLock.release()
+            time.sleep(random.random())
+        if stopThreadsSR:
+            break
+
+def StudentOut():
+    global studentsIn
+    while True:
+        if studentsIn > 0 and not doorLock.locked():
+            doorLock.acquire()
+            studentsLock.acquire()
+            studentsIn -= 1
+            print("A student left. Students left in the room:", studentsIn)
+            studentsLock.release()
+            doorLock.release()
+            time.sleep(random.random())
+        if stopThreadsSR:
+            break
+
+def StudentIn():
+    global studentsIn
+    while True:
+        if not prefectLock.locked() and not doorLock.locked():
+            doorLock.acquire()
+            studentsLock.acquire()
+            studentsIn += 1
+            print("A student entered. Students in the room:", studentsIn)
+            studentsLock.release()
+            doorLock.release()
+            time.sleep(random.random())
+        if stopThreadsSR:
+            break
 
 # Sleeping Barber
 
@@ -87,6 +137,25 @@ while option != 4:
         consumer.join()
     elif option == 2:
         print("Running: ", op2Name)
+        print("")
+        stopThreadsSR = False
+        pI = threading.Thread(target=PrefectIn)
+        pO = threading.Thread(target=PrefectOut)
+        sI = threading.Thread(target=StudentIn)
+        sO = threading.Thread(target=StudentOut)
+        timeSR = int(input("Time for the program to run: "))
+        print("")
+        print("--- Room capacity: 50 students")
+        pI.start()
+        pO.start()
+        sI.start()
+        sO.start()
+        time.sleep(timeSR)
+        stopThreadsSR = True
+        pI.join()
+        pO.join()
+        sI.join()
+        sO.join()
     elif option == 3:
         print("Running: ", op3Name)
     elif option != 4:

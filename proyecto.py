@@ -121,7 +121,6 @@ def Barber():
         if stopThreadsSP:
             break
 
-
 def Customer():
     global freeSeats
     while True:

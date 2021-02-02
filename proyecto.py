@@ -25,26 +25,28 @@ modificationLock = Lock()
 ############### THREADS ###############
 ##### Consumer - Producer
 def ProducerThread():
-    global buffer
+    global currentBuffer
+    global bufferSize
     while True:
-        if buffer < 2:
+        if currentBuffer < bufferSize:
             bufferLock.acquire()
-            buffer += 1
-            print("Produced data:", buffer)
+            currentBuffer += 1
+            print("Produced data:", currentBuffer)
             bufferLock.release()
             time.sleep(random.random())
         if stopThreadsCP:
             break
 
 def ConsumerThread():
+    global currentBuffer
     global buffer
     while True:
-        if buffer == 2:
+        if currentBuffer >= 2:
             bufferLock.acquire()
-            buffer = 0
-            print("Consumed data. Remaining: ", buffer)
+            currentBuffer -= 2
+            print("Consumed data. Remaining: ", currentBuffer)
             bufferLock.release()
-            time.sleep(random.random())
+            time.sleep(random.random()+0.5)
         if stopThreadsCP:
             break
 
@@ -154,13 +156,13 @@ while option != 4:
     if option == 1:
         print("Running: ", op1Name)
         print("")
-        buffer = 0
         stopThreadsCP = False
         producer = threading.Thread(target=ProducerThread)
         consumer = threading.Thread(target=ConsumerThread)
         timeCP = int(input("Type the number of seconds the option will run: "))
         print("")
-        print("--- Buffer size: 2")
+        bufferSize = int(input("Type buffer size: "))
+        currentBuffer = 0
         producer.start()
         consumer.start()
         time.sleep(timeCP)

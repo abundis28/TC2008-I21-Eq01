@@ -33,3 +33,5 @@ There is one barber, one barber chair, and n quantity of waiting chairs for the 
 * If there is no customer, then the barber sleeps in his own chair.
 * When a customer arrives, he has to wake up the barber.
 * If there are many customers and the barber is cutting a customer’s hair, then the remaining customers either wait if there are empty chairs in the waiting room or they leave if no chairs are empty.
+
+#### Demonstration video: https://youtu.be/GRXgvn25Okg

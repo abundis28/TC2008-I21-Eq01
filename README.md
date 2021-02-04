@@ -2,8 +2,8 @@
 
 ## Team Members:
   - Andrés Abundis      A01283152
-  - Paulina Márquez     
-  - Lucas Ortiz         
+  - Paulina Márquez     A01650311
+  - Lucas Ortiz         A00826544
   - Carlos Madruga      A01283205
   - Adrián Montemayor   A01283139
 
